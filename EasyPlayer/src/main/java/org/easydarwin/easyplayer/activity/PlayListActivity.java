@@ -35,6 +35,7 @@ import com.bumptech.glide.signature.StringSignature;
 import org.easydarwin.easyplayer.BuildConfig;
 import org.easydarwin.easyplayer.R;
 import org.easydarwin.easyplayer.TheApp;
+import org.easydarwin.easyplayer.bean.VedioAddrBean;
 import org.easydarwin.easyplayer.data.VideoSource;
 import org.easydarwin.easyplayer.databinding.ActivityPlayListBinding;
 import org.easydarwin.easyplayer.databinding.VideoSourceItemBinding;
@@ -54,6 +55,8 @@ public class PlayListActivity extends AppCompatActivity implements View.OnClickL
 
     private static final int REQUEST_PLAY = 1000;
     public static final int REQUEST_CAMERA_PERMISSION = 1001;
+    public static final int REQUEST_ADD_DEVICE = 1004;
+    public static final String DEVICE_INFO = "added_device_info";  //添加的设备信息
     private static final int REQUEST_SCAN_TEXT_URL = 1003;      // 扫描二维码
 
     public static final String EXTRA_BOOLEAN_SELECT_ITEM_TO_PLAY = "extra-boolean-select-item-to-play";
@@ -173,11 +176,13 @@ public class PlayListActivity extends AppCompatActivity implements View.OnClickL
                 displayDialog(-1);
             }
         });
-
+/**
+ * 添加设备
+ */
         mBinding.toolbarAbout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(PlayListActivity.this, AddAdressActivity.class));
+                startActivityForResult(new Intent(PlayListActivity.this, AddAdressActivity.class),REQUEST_ADD_DEVICE);
             }
         });
 
@@ -263,11 +268,11 @@ public class PlayListActivity extends AppCompatActivity implements View.OnClickL
         final int pos = holder.getAdapterPosition();
 
         if (pos != -1) {
-            new AlertDialog.Builder(this).setItems(new CharSequence[]{"修改", "删除"}, new DialogInterface.OnClickListener() {
+            new AlertDialog.Builder(this).setItems(new CharSequence[]{ "删除"}, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     if (i == 0) {
-                        displayDialog(pos);
+//                        displayDialog(pos);
                     } else {
                         new AlertDialog
                                 .Builder(PlayListActivity.this)
@@ -443,8 +448,14 @@ public class PlayListActivity extends AppCompatActivity implements View.OnClickL
                 String url = data.getStringExtra("text");
                 edit.setText(url);
             }
-        } else {
+        } else if(requestCode == REQUEST_ADD_DEVICE){
+            if (data!=null) {
+                VedioAddrBean bean = data.getParcelableExtra(DEVICE_INFO);
+                bean.getName();
+            }
+        }else{
             mRecyclerView.getAdapter().notifyItemChanged(mPos);
+
         }
     }
 }
