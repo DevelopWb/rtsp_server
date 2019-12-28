@@ -63,12 +63,12 @@
         <FrameLayout
             android:id="@+id/render_fl"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/render_wnd_height">
+            android:layout_height="match_parent">
 
             <FrameLayout
                 android:id="@+id/render_holder"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/render_wnd_height"></FrameLayout>
+                android:layout_height="match_parent"></FrameLayout>
 
             <LinearLayout
                 android:id="@+id/live_video_bar"

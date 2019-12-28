@@ -73,18 +73,24 @@ public class AddAdressActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onClick(View view) {
                 String  name = binding.devNameEt.getText().toString().trim();
-                String  url = binding.newMediaSourceUrl.getText().toString().trim();
+                String  ip = binding.newMediaSourceIpEt.getText().toString().trim();
+                String  regCode = binding.newMediaRegCodeEt.getText().toString().trim();
                 if (TextUtils.isEmpty(name)) {
                     Toast.makeText(getApplicationContext(), "请输入设备名称", Toast.LENGTH_LONG).show();
                     return;
                 }
-                if (url.toLowerCase().indexOf("rtsp://") != 0) {
-                    Toast.makeText(AddAdressActivity.this,"不是合法的RTSP地址，请重新添加.",Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(ip)) {
+                    Toast.makeText(getApplicationContext(), "请输入IP地址", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (TextUtils.isEmpty(regCode)) {
+                    Toast.makeText(getApplicationContext(), "请输入注册码", Toast.LENGTH_LONG).show();
                     return;
                 }
                 VedioAddrBean  vedioAddrBean = new VedioAddrBean();
                 vedioAddrBean.setName(name);
-                vedioAddrBean.setURL(url);
+                vedioAddrBean.setIp(ip);
+                vedioAddrBean.setRegCode(regCode);
                 vedioAddrBean.setProtocal(binding.transportTcp.isChecked()?"TCP":"UDP");
                 vedioAddrBean.setSendPakage(binding.sendOption.isChecked()?true:false);
                 Intent  intent = new Intent();
@@ -102,7 +108,7 @@ public class AddAdressActivity extends AppCompatActivity implements View.OnClick
 
     private void initView() {
         mDevNameEt = (EditText) findViewById(R.id.dev_name_et);
-        mNewMediaSourceUrl = (EditText) findViewById(R.id.new_media_source_url);
+        mNewMediaSourceUrl = (EditText) findViewById(R.id.new_media_source_ip_et);
         mTransportTcp = (RadioButton) findViewById(R.id.transport_tcp);
         mTransportUdp = (RadioButton) findViewById(R.id.transport_udp);
         mSendOption = (CheckBox) findViewById(R.id.send_option);

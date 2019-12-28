@@ -1,9 +1,9 @@
 package org.easydarwin.easyplayer;
 
 import android.app.Application;
-import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.basenetlib.util.NetWorkUtil;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 
@@ -25,6 +25,7 @@ public class TheApp extends Application {
 
         Bugly.init(getApplicationContext(), "eb3d7319a8", false);
         setBuglyInit();
+        NetWorkUtil.initContext(this);
     }
 //    protected void attachBaseContext(Context base) {
 //

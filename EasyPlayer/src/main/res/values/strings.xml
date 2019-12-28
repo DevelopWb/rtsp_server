@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">管理端</string>
+    <string name="qzgl_name">取证管理端</string>
     <string name="app_flavor">basic</string>
 
     <string name="title_activity_settings">Settings</string>

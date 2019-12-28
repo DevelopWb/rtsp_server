@@ -42,7 +42,6 @@ import org.easydarwin.easyplayer.data.VideoSource;
 import org.easydarwin.easyplayer.databinding.ActivityPlayListBinding;
 import org.easydarwin.easyplayer.databinding.DevListItemBinding;
 import org.easydarwin.easyplayer.util.FileUtil;
-import org.easydarwin.easyplayer.util.SPUtil;
 import org.easydarwin.update.UpdateMgr;
 
 import java.io.File;
@@ -88,23 +87,23 @@ public class PlayListActivity extends AppCompatActivity implements View.OnClickL
 
         setSupportActionBar(mBinding.toolbar);
 
-        // 添加默认地址
+//        // 添加默认地址
         mCursor = TheApp.sDB.query(VideoSource.TABLE_NAME, null, null, null, null, null, null);
-        if (!mCursor.moveToFirst()) {
-            ContentValues cv = new ContentValues();
-            cv.put(VideoSource.URL, "rtsp://218.246.35.198:554/688844");
-            cv.put(VideoSource.NAME,"dev1");
-            cv.put(VideoSource.TRANSPORT_MODE, VideoSource.TRANSPORT_MODE_TCP);
-            cv.put(VideoSource.SEND_OPTION, VideoSource.SEND_OPTION_TRUE);
-
-            TheApp.sDB.insert(VideoSource.TABLE_NAME, null, cv);
-
-            mCursor.close();
-            mCursor = TheApp.sDB.query(VideoSource.TABLE_NAME, null, null, null, null, null, null);
-
-            SPUtil.setAutoAudio(this, true);
-            SPUtil.setswCodec(this, true);
-        }
+//        if (!mCursor.moveToFirst()) {
+//            ContentValues cv = new ContentValues();
+//            cv.put(VideoSource.URL, "rtsp://218.246.35.198:554/688844");
+//            cv.put(VideoSource.NAME,"dev1");
+//            cv.put(VideoSource.TRANSPORT_MODE, VideoSource.TRANSPORT_MODE_TCP);
+//            cv.put(VideoSource.SEND_OPTION, VideoSource.SEND_OPTION_TRUE);
+//
+//            TheApp.sDB.insert(VideoSource.TABLE_NAME, null, cv);
+//
+//            mCursor.close();
+//            mCursor = TheApp.sDB.query(VideoSource.TABLE_NAME, null, null, null, null, null, null);
+//
+//            SPUtil.setAutoAudio(this, true);
+//            SPUtil.setswCodec(this, true);
+//        }
 
         mRecyclerView = mBinding.recycler;
         mRecyclerView.setHasFixedSize(true);
@@ -122,7 +121,10 @@ public class PlayListActivity extends AppCompatActivity implements View.OnClickL
                 String name = mCursor.getString(mCursor.getColumnIndex(VideoSource.NAME));
                 String url = mCursor.getString(mCursor.getColumnIndex(VideoSource.URL));
 
-                plvh.mDevNaMETv.setText(name);
+                plvh.mDevNameTv.setText(name);
+                if (url.length()>8) {
+                    url=url.substring(7,url.lastIndexOf(":"));
+                }
                 plvh.mDevUrlTv.setText(url);
 
                 File file = FileUtil.getSnapFile(url);
@@ -244,6 +246,7 @@ public class PlayListActivity extends AppCompatActivity implements View.OnClickL
 
         if (pos != -1) {
             mCursor.moveToPosition(pos);
+            String playDevName = mCursor.getString(mCursor.getColumnIndex(VideoSource.NAME));
             String playUrl = mCursor.getString(mCursor.getColumnIndex(VideoSource.URL));
             int sendOption = mCursor.getInt(mCursor.getColumnIndex(VideoSource.SEND_OPTION));
             int transportMode = mCursor.getInt(mCursor.getColumnIndex(VideoSource.TRANSPORT_MODE));
@@ -261,11 +264,13 @@ public class PlayListActivity extends AppCompatActivity implements View.OnClickL
                         // YUV EXPORT DEMO..
                         Intent i = new Intent(PlayListActivity.this, YUVExportActivity.class);
                         i.putExtra("play_url", playUrl);
+                        i.putExtra("play_name", playDevName);
                         mPos = pos;
                         startActivity(i);
                     } else {
                         Intent i = new Intent(PlayListActivity.this, PlayActivity.class);
                         i.putExtra("play_url", playUrl);
+                        i.putExtra("play_name", playDevName);
                         i.putExtra(VideoSource.SEND_OPTION, sendOption);
                         i.putExtra(VideoSource.TRANSPORT_MODE, transportMode);
                         mPos = pos;
@@ -331,7 +336,7 @@ public class PlayListActivity extends AppCompatActivity implements View.OnClickL
         final CheckBox sendOption = view.findViewById(R.id.send_option);
         final RadioGroup transportMode = view.findViewById(R.id.transport_mode);
         final RadioButton transportTcp = view.findViewById(R.id.transport_tcp);
-        edit = view.findViewById(R.id.new_media_source_url);
+        edit = view.findViewById(R.id.new_media_source_ip_et);
 
         if (pos > -1) {
             mCursor.moveToPosition(pos);
@@ -436,7 +441,7 @@ public class PlayListActivity extends AppCompatActivity implements View.OnClickL
      * 视频源的item
      */
     class PlayListViewHolder extends RecyclerView.ViewHolder {
-        private final TextView mDevNaMETv;
+        private final TextView mDevNameTv;
         private final TextView mDevUrlTv;
         private final TextView mAudienceNumber;
         private final ImageView mImageView;
@@ -444,7 +449,7 @@ public class PlayListActivity extends AppCompatActivity implements View.OnClickL
         public PlayListViewHolder(DevListItemBinding binding) {
             super(binding.getRoot());
 
-            mDevNaMETv = binding.devNameValueTv;
+            mDevNameTv = binding.devNameValueTv;
             mDevUrlTv = binding.devUrlValueTv;
             mAudienceNumber = binding.videoSourceItemAudienceNumber;
             mImageView = binding.videoSourceItemThumb;
@@ -467,8 +472,10 @@ public class PlayListActivity extends AppCompatActivity implements View.OnClickL
         } else if (requestCode == REQUEST_ADD_DEVICE) {
             if (data != null) {
                 VedioAddrBean bean = data.getParcelableExtra(DEVICE_INFO);
+                StringBuilder  sb = new StringBuilder();
+                sb.append("rtsp://").append(bean.getIp()).append(":554/").append(bean.getRegCode()).append(".sdp");
                 ContentValues cv = new ContentValues();
-                cv.put(VideoSource.URL, bean.getURL());
+                cv.put(VideoSource.URL, sb.toString());
                 cv.put(VideoSource.NAME, bean.getName());
                 if ("TCP".equals(bean.getProtocal())) {
                     cv.put(VideoSource.TRANSPORT_MODE, VideoSource.TRANSPORT_MODE_TCP);

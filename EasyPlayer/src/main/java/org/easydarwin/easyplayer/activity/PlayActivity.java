@@ -55,6 +55,7 @@ public class PlayActivity extends AppCompatActivity implements PlayFragment.OnDo
 
     private SoundPool mSoundPool;
     private String url;
+    private String devName;
 
     private int mTalkPictureSound;
     //    private int mActionStartSound;
@@ -108,6 +109,7 @@ public class PlayActivity extends AppCompatActivity implements PlayFragment.OnDo
         }
 
         url = getIntent().getStringExtra("play_url");
+        devName = getIntent().getStringExtra("play_name");
         int transportMode = getIntent().getIntExtra(VideoSource.TRANSPORT_MODE, 0);
         int sendOption = getIntent().getIntExtra(VideoSource.SEND_OPTION, 0);
         if (TextUtils.isEmpty(url)) {
@@ -163,7 +165,7 @@ public class PlayActivity extends AppCompatActivity implements PlayFragment.OnDo
             }
         });
 
-        mBinding.toolbarTitle.setText(url);
+        mBinding.toolbarTitle.setText(devName);
         mBinding.toolbarBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

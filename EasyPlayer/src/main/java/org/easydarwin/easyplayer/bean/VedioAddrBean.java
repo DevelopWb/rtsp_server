@@ -11,7 +11,8 @@ import android.os.Parcelable;
 public class VedioAddrBean implements Parcelable {
 
     private  String  Name ;
-    private  String  URL ;
+    private  String Ip;
+    private  String RegCode;
     private  String  Protocal ;
     private  boolean  sendPakage ;
 
@@ -23,12 +24,20 @@ public class VedioAddrBean implements Parcelable {
         Name = name;
     }
 
-    public String getURL() {
-        return URL == null ? "" : URL;
+    public String getIp() {
+        return Ip == null ? "" : Ip;
     }
 
-    public void setURL(String URL) {
-        this.URL = URL;
+    public void setIp(String ip) {
+        Ip = ip;
+    }
+
+    public String getRegCode() {
+        return RegCode == null ? "" : RegCode;
+    }
+
+    public void setRegCode(String regCode) {
+        RegCode = regCode;
     }
 
     public String getProtocal() {
@@ -47,6 +56,7 @@ public class VedioAddrBean implements Parcelable {
         this.sendPakage = sendPakage;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -55,7 +65,8 @@ public class VedioAddrBean implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.Name);
-        dest.writeString(this.URL);
+        dest.writeString(this.Ip);
+        dest.writeString(this.RegCode);
         dest.writeString(this.Protocal);
         dest.writeByte(this.sendPakage ? (byte) 1 : (byte) 0);
     }
@@ -65,12 +76,13 @@ public class VedioAddrBean implements Parcelable {
 
     protected VedioAddrBean(Parcel in) {
         this.Name = in.readString();
-        this.URL = in.readString();
+        this.Ip = in.readString();
+        this.RegCode = in.readString();
         this.Protocal = in.readString();
         this.sendPakage = in.readByte() != 0;
     }
 
-    public static final Parcelable.Creator<VedioAddrBean> CREATOR = new Parcelable.Creator<VedioAddrBean>() {
+    public static final Creator<VedioAddrBean> CREATOR = new Creator<VedioAddrBean>() {
         @Override
         public VedioAddrBean createFromParcel(Parcel source) {
             return new VedioAddrBean(source);
