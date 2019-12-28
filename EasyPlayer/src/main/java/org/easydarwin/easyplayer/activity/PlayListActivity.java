@@ -38,7 +38,7 @@ import org.easydarwin.easyplayer.TheApp;
 import org.easydarwin.easyplayer.bean.VedioAddrBean;
 import org.easydarwin.easyplayer.data.VideoSource;
 import org.easydarwin.easyplayer.databinding.ActivityPlayListBinding;
-import org.easydarwin.easyplayer.databinding.VideoSourceItemBinding;
+import org.easydarwin.easyplayer.databinding.DevListItemBinding;
 import org.easydarwin.easyplayer.util.FileUtil;
 import org.easydarwin.easyplayer.util.SPUtil;
 import org.easydarwin.update.UpdateMgr;
@@ -50,7 +50,7 @@ import static org.easydarwin.update.UpdateMgr.MY_PERMISSIONS_REQUEST_WRITE_EXTER
 
 /**
  * 视频广场
- * */
+ */
 public class PlayListActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener {
 
     private static final int REQUEST_PLAY = 1000;
@@ -91,6 +91,7 @@ public class PlayListActivity extends AppCompatActivity implements View.OnClickL
         if (!mCursor.moveToFirst()) {
             ContentValues cv = new ContentValues();
             cv.put(VideoSource.URL, "rtsp://218.246.35.198:554/688844");
+            cv.put(VideoSource.NAME,"dev1");
             cv.put(VideoSource.TRANSPORT_MODE, VideoSource.TRANSPORT_MODE_TCP);
             cv.put(VideoSource.SEND_OPTION, VideoSource.SEND_OPTION_TRUE);
 
@@ -109,7 +110,7 @@ public class PlayListActivity extends AppCompatActivity implements View.OnClickL
         mRecyclerView.setAdapter(new RecyclerView.Adapter() {
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                return new PlayListViewHolder((VideoSourceItemBinding) DataBindingUtil.inflate(getLayoutInflater(), R.layout.video_source_item, parent, false));
+                return new PlayListViewHolder((DevListItemBinding) DataBindingUtil.inflate(getLayoutInflater(), R.layout.dev_list_item, parent, false));
             }
 
             @Override
@@ -119,14 +120,11 @@ public class PlayListActivity extends AppCompatActivity implements View.OnClickL
                 String name = mCursor.getString(mCursor.getColumnIndex(VideoSource.NAME));
                 String url = mCursor.getString(mCursor.getColumnIndex(VideoSource.URL));
 
-                if (!TextUtils.isEmpty(name)) {
-                    plvh.mTextView.setText(name);
-                } else {
-                    plvh.mTextView.setText(url);
-                }
+                plvh.mDevNaMETv.setText(name);
+                plvh.mDevUrlTv.setText(url);
 
                 File file = FileUtil.getSnapFile(url);
-                Glide.with(PlayListActivity.this).load(file).signature(new StringSignature(UUID.randomUUID().toString())).placeholder(R.drawable.placeholder).centerCrop().into(plvh.mImageView);
+                Glide.with(PlayListActivity.this).load(file).signature(new StringSignature(UUID.randomUUID().toString())).placeholder(R.mipmap.dev_icon).centerCrop().into(plvh.mImageView);
 
                 int audienceNumber = mCursor.getInt(mCursor.getColumnIndex(VideoSource.AUDIENCE_NUMBER));
 
@@ -173,29 +171,43 @@ public class PlayListActivity extends AppCompatActivity implements View.OnClickL
         mBinding.toolbarAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayDialog(-1);
+                startActivityForResult(new Intent(PlayListActivity.this, AddAdressActivity.class), REQUEST_ADD_DEVICE);
+
+//                displayDialog(-1);
             }
         });
-/**
- * 添加设备
- */
-        mBinding.toolbarAbout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivityForResult(new Intent(PlayListActivity.this, AddAdressActivity.class),REQUEST_ADD_DEVICE);
-            }
-        });
+///**
+// * 添加设备
+// */
+//        mBinding.toolbarAbout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivityForResult(new Intent(PlayListActivity.this, AddAdressActivity.class), REQUEST_ADD_DEVICE);
+//            }
+//        });
 
-        /* ==================== 版本更新 ==================== */
-        String url;
-        if (PlayListActivity.isPro()) {
-            url = "http://www.easydarwin.org/versions/easyplayer_pro/version.txt";
-        } else {
-            url = "http://www.easydarwin.org/versions/easyplayer-rtmp/version.txt";
-        }
-
-        update = new UpdateMgr(this);
-        update.checkUpdate(url);
+//        /* ==================== 版本更新 ==================== */
+//        String url;
+//        if (PlayListActivity.isPro()) {
+//            url = "http://www.easydarwin.org/versions/easyplayer_pro/version.txt";
+//        } else {
+//            url = "http://www.easydarwin.org/versions/easyplayer-rtmp/version.txt";
+//        }
+//
+//        update = new UpdateMgr(this);
+//        update.checkUpdate(url);
+//        RegOperateUtil regOprateUtil = RegOperateUtil.getInstance(this);
+//        regOprateUtil.setCancelCallBack(new RegLatestContact.CancelCallBack() {
+//            @Override
+//            public void toFinishActivity() {
+//                finish();
+//            }
+//
+//            @Override
+//            public void toDoNext() {
+//
+//            }
+//        });
     }
 
     @Override
@@ -268,28 +280,28 @@ public class PlayListActivity extends AppCompatActivity implements View.OnClickL
         final int pos = holder.getAdapterPosition();
 
         if (pos != -1) {
-            new AlertDialog.Builder(this).setItems(new CharSequence[]{ "删除"}, new DialogInterface.OnClickListener() {
+            new AlertDialog.Builder(this).setItems(new CharSequence[]{"删除"}, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    if (i == 0) {
+//                    if (i == 0) {
 //                        displayDialog(pos);
-                    } else {
-                        new AlertDialog
-                                .Builder(PlayListActivity.this)
-                                .setMessage("确定要删除该地址吗？")
-                                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        mCursor.moveToPosition(pos);
-                                        TheApp.sDB.delete(VideoSource.TABLE_NAME, VideoSource._ID + "=?", new String[]{String.valueOf(mCursor.getInt(mCursor.getColumnIndex(VideoSource._ID)))});
-                                        mCursor.close();
-                                        mCursor = TheApp.sDB.query(VideoSource.TABLE_NAME, null, null, null, null, null, null);
-                                        mRecyclerView.getAdapter().notifyItemRemoved(pos);
-                                    }
-                                })
-                                .setNegativeButton("取消", null)
-                                .show();
-                    }
+//                    } else {
+                    new AlertDialog
+                            .Builder(PlayListActivity.this)
+                            .setMessage("确定要删除该地址吗？")
+                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    mCursor.moveToPosition(pos);
+                                    TheApp.sDB.delete(VideoSource.TABLE_NAME, VideoSource._ID + "=?", new String[]{String.valueOf(mCursor.getInt(mCursor.getColumnIndex(VideoSource._ID)))});
+                                    mCursor.close();
+                                    mCursor = TheApp.sDB.query(VideoSource.TABLE_NAME, null, null, null, null, null, null);
+                                    mRecyclerView.getAdapter().notifyItemRemoved(pos);
+                                }
+                            })
+                            .setNegativeButton("取消", null)
+                            .show();
+//                    }
                 }
             }).show();
         }
@@ -356,7 +368,7 @@ public class PlayListActivity extends AppCompatActivity implements View.OnClickL
                         }
 
                         if (url.toLowerCase().indexOf("rtsp://") != 0) {
-                            Toast.makeText(PlayListActivity.this,"不是合法的RTSP地址，请重新添加.",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PlayListActivity.this, "不是合法的RTSP地址，请重新添加.", Toast.LENGTH_SHORT).show();
                             return;
                         }
 
@@ -420,16 +432,18 @@ public class PlayListActivity extends AppCompatActivity implements View.OnClickL
 
     /**
      * 视频源的item
-     * */
+     */
     class PlayListViewHolder extends RecyclerView.ViewHolder {
-        private final TextView mTextView;
+        private final TextView mDevNaMETv;
+        private final TextView mDevUrlTv;
         private final TextView mAudienceNumber;
         private final ImageView mImageView;
 
-        public PlayListViewHolder(VideoSourceItemBinding binding) {
+        public PlayListViewHolder(DevListItemBinding binding) {
             super(binding.getRoot());
 
-            mTextView = binding.videoSourceItemName;
+            mDevNaMETv = binding.devNameValueTv;
+            mDevUrlTv = binding.devUrlValueTv;
             mAudienceNumber = binding.videoSourceItemAudienceNumber;
             mImageView = binding.videoSourceItemThumb;
 
@@ -448,12 +462,27 @@ public class PlayListActivity extends AppCompatActivity implements View.OnClickL
                 String url = data.getStringExtra("text");
                 edit.setText(url);
             }
-        } else if(requestCode == REQUEST_ADD_DEVICE){
-            if (data!=null) {
+        } else if (requestCode == REQUEST_ADD_DEVICE) {
+            if (data != null) {
                 VedioAddrBean bean = data.getParcelableExtra(DEVICE_INFO);
-                bean.getName();
+                ContentValues cv = new ContentValues();
+                cv.put(VideoSource.URL, bean.getURL());
+                cv.put(VideoSource.NAME, bean.getName());
+                if ("TCP".equals(bean.getProtocal())) {
+                    cv.put(VideoSource.TRANSPORT_MODE, VideoSource.TRANSPORT_MODE_TCP);
+                } else {
+                    cv.put(VideoSource.TRANSPORT_MODE, VideoSource.TRANSPORT_MODE_UDP);
+                }
+
+                cv.put(VideoSource.SEND_OPTION, bean.isSendPakage() ? VideoSource.SEND_OPTION_TRUE : VideoSource.SEND_OPTION_FALSE);
+
+                TheApp.sDB.insert(VideoSource.TABLE_NAME, null, cv);
+
+                mCursor.close();
+                mCursor = TheApp.sDB.query(VideoSource.TABLE_NAME, null, null, null, null, null, null);
+                mRecyclerView.getAdapter().notifyItemInserted(mCursor.getCount() - 1);
             }
-        }else{
+        } else {
             mRecyclerView.getAdapter().notifyItemChanged(mPos);
 
         }
