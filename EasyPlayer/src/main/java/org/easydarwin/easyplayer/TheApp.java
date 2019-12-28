@@ -3,7 +3,6 @@ package org.easydarwin.easyplayer;
 import android.app.Application;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.multidex.MultiDex;
 
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
@@ -27,13 +26,13 @@ public class TheApp extends Application {
         Bugly.init(getApplicationContext(), "eb3d7319a8", false);
         setBuglyInit();
     }
-    protected void attachBaseContext(Context base) {
-
-        super.attachBaseContext(base);
-
-        MultiDex.install(base);
-
-    }
+//    protected void attachBaseContext(Context base) {
+//
+//        super.attachBaseContext(base);
+//
+//        MultiDex.install(base);
+//
+//    }
 
     public void setBuglyInit(){
         // 添加可显示弹窗的Activity
