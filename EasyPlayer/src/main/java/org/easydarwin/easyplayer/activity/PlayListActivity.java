@@ -123,21 +123,24 @@ public class PlayListActivity extends AppCompatActivity implements View.OnClickL
 
                 plvh.mDevNameTv.setText(name);
                 if (url.length()>8) {
-                    url=url.substring(7,url.lastIndexOf(":"));
+                    String  ip = url.substring(7,url.lastIndexOf(":"));
+                    String  regCode = url.substring(url.lastIndexOf("/")+1,url.lastIndexOf("."));
+                    plvh.mDevUrlTv.setText(ip);
+                    plvh.mDevRegTv.setText(regCode);
                 }
-                plvh.mDevUrlTv.setText(url);
+
 
                 File file = FileUtil.getSnapFile(url);
                 Glide.with(PlayListActivity.this).load(file).signature(new StringSignature(UUID.randomUUID().toString())).placeholder(R.mipmap.dev_icon).centerCrop().into(plvh.mImageView);
 
                 int audienceNumber = mCursor.getInt(mCursor.getColumnIndex(VideoSource.AUDIENCE_NUMBER));
 
-                if (audienceNumber > 0) {
-                    plvh.mAudienceNumber.setText(String.format("当前观看人数:%d", audienceNumber));
-                    plvh.mAudienceNumber.setVisibility(View.VISIBLE);
-                } else {
-                    plvh.mAudienceNumber.setVisibility(View.GONE);
-                }
+//                if (audienceNumber > 0) {
+//                    plvh.mAudienceNumber.setText(String.format("当前观看人数:%d", audienceNumber));
+//                    plvh.mAudienceNumber.setVisibility(View.VISIBLE);
+//                } else {
+//                    plvh.mAudienceNumber.setVisibility(View.GONE);
+//                }
             }
 
             @Override
@@ -295,7 +298,7 @@ public class PlayListActivity extends AppCompatActivity implements View.OnClickL
 //                    } else {
                     new AlertDialog
                             .Builder(PlayListActivity.this)
-                            .setMessage("确定要删除该地址吗？")
+                            .setMessage("确定要删除该设备吗？")
                             .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -443,7 +446,8 @@ public class PlayListActivity extends AppCompatActivity implements View.OnClickL
     class PlayListViewHolder extends RecyclerView.ViewHolder {
         private final TextView mDevNameTv;
         private final TextView mDevUrlTv;
-        private final TextView mAudienceNumber;
+        private final TextView mDevRegTv;
+//        private final TextView mAudienceNumber;
         private final ImageView mImageView;
 
         public PlayListViewHolder(DevListItemBinding binding) {
@@ -451,7 +455,8 @@ public class PlayListActivity extends AppCompatActivity implements View.OnClickL
 
             mDevNameTv = binding.devNameValueTv;
             mDevUrlTv = binding.devUrlValueTv;
-            mAudienceNumber = binding.videoSourceItemAudienceNumber;
+            mDevRegTv = binding.devRegValueTv;
+//            mAudienceNumber = binding.videoSourceItemAudienceNumber;
             mImageView = binding.videoSourceItemThumb;
 
             itemView.setOnClickListener(PlayListActivity.this);

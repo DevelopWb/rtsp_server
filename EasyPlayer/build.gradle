@@ -2,12 +2,18 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '28.0.3'
-
+    signingConfigs {
+        config {
+            keyAlias 'dwh'
+            keyPassword 'dwh2016'
+            storeFile file('push.jks')
+            storePassword 'dwh2016'
+        }
+    }
     defaultConfig {
         applicationId "org.easydarwin.easyplayer"
         minSdkVersion 19
-        targetSdkVersion 21
+        targetSdkVersion 23
         versionCode 14191212
         versionName "1.4.19.1212"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -24,9 +30,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+        debug {
+            signingConfig signingConfigs.config
         }
     }
-
     dataBinding {
         enabled = true
     }

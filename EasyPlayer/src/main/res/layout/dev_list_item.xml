@@ -29,11 +29,11 @@
                 android:id="@+id/dev_name_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:text="设备名称:"
-                android:layout_marginLeft="5dp"
                 android:textColor="@android:color/black"
                 android:textSize="14dp"
-                app:layout_constraintBottom_toTopOf="@+id/url_tv"
+                app:layout_constraintBottom_toTopOf="@+id/dev_reg_tv"
                 app:layout_constraintLeft_toRightOf="@+id/video_source_item_thumb"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="MissingConstraints" />
@@ -42,22 +42,35 @@
                 android:id="@+id/dev_name_value_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="12dp"
                 android:layout_marginLeft="5dp"
                 android:maxLength="20"
+                android:textSize="12dp"
                 app:layout_constraintBottom_toBottomOf="@+id/dev_name_tv"
                 app:layout_constraintLeft_toRightOf="@+id/dev_name_tv"
                 app:layout_constraintTop_toTopOf="@+id/dev_name_tv" />
 
             <TextView
-                android:id="@+id/dev_url_value_tv"
-                android:layout_width="0dp"
-                app:layout_constraintRight_toRightOf="parent"
+                android:id="@+id/dev_reg_tv"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="注册码:"
+                android:textColor="@android:color/black"
+                android:textSize="14dp"
+                app:layout_constraintBottom_toTopOf="@+id/url_tv"
+                app:layout_constraintLeft_toRightOf="@+id/video_source_item_thumb"
+                app:layout_constraintTop_toBottomOf="@+id/dev_name_tv" />
+
+            <TextView
+                android:id="@+id/dev_reg_value_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLength="20"
                 android:textSize="12dp"
-                app:layout_constraintBottom_toBottomOf="@+id/url_tv"
+                app:layout_constraintBottom_toBottomOf="@+id/dev_reg_tv"
                 app:layout_constraintLeft_toLeftOf="@+id/dev_name_value_tv"
-                app:layout_constraintTop_toTopOf="@+id/url_tv" />
+                app:layout_constraintTop_toTopOf="@+id/dev_reg_tv" />
+
 
             <TextView
                 android:id="@+id/url_tv"
@@ -66,22 +79,32 @@
                 android:text="IP地址:"
                 android:textColor="@android:color/black"
                 android:textSize="14dp"
-                app:layout_constraintBottom_toTopOf="@+id/video_source_item_audience_number"
-                app:layout_constraintLeft_toLeftOf="@+id/dev_name_tv"
-                app:layout_constraintTop_toBottomOf="@+id/dev_name_tv" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="@+id/dev_reg_tv"
+                app:layout_constraintTop_toBottomOf="@+id/dev_reg_tv" />
 
             <TextView
-                android:id="@+id/video_source_item_audience_number"
-                android:layout_width="wrap_content"
+                android:id="@+id/dev_url_value_tv"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:text="实时观看人数:0"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="@+id/url_tv"
-                app:layout_constraintTop_toBottomOf="@+id/url_tv" />
+                android:textSize="12dp"
+                app:layout_constraintBottom_toBottomOf="@+id/url_tv"
+                app:layout_constraintLeft_toLeftOf="@+id/dev_reg_value_tv"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/url_tv" />
+
+            <!--<TextView-->
+            <!--android:id="@+id/video_source_item_audience_number"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:paddingLeft="8dp"-->
+            <!--android:paddingRight="8dp"-->
+            <!--android:text="实时观看人数:0"-->
+            <!--android:visibility="gone"-->
+            <!--app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--app:layout_constraintLeft_toLeftOf="@+id/url_tv"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/url_tv" />-->
 
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>

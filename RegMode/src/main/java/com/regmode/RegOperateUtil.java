@@ -76,7 +76,6 @@ public class RegOperateUtil extends BaseReg implements RequestStatus {
     public static boolean isForbidden = false;//是否禁用
     public static int REGSIZE = 0;
     public static String URL_Reg_Center = "http://zc.xun365.net";//注册码中心系统
-    public static String APP_MARK = "ZNZT";//软件标识
     private CommonProgressDialog mProgressDialog;
     private String nearestVersion;
     private Context context;

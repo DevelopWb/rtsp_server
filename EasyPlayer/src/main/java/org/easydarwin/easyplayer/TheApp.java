@@ -4,7 +4,6 @@ import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.basenetlib.util.NetWorkUtil;
-import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 
 import org.easydarwin.easyplayer.activity.PlayListActivity;
@@ -23,8 +22,8 @@ public class TheApp extends Application {
         activeDays = Client.getActiveDays(this, BuildConfig.RTSP_KEY);
         sDB = new EasyDBHelper(this).getWritableDatabase();
 
-        Bugly.init(getApplicationContext(), "eb3d7319a8", false);
-        setBuglyInit();
+//        Bugly.init(getApplicationContext(), "eb3d7319a8", false);
+//        setBuglyInit();
         NetWorkUtil.initContext(this);
     }
 //    protected void attachBaseContext(Context base) {
