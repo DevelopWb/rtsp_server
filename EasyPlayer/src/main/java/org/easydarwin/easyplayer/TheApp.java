@@ -4,6 +4,7 @@ import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.basenetlib.util.NetWorkUtil;
+import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 
 import org.easydarwin.easyplayer.activity.PlayListActivity;

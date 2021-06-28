@@ -149,12 +149,12 @@ public class PlayListActivity extends AppCompatActivity implements View.OnClickL
             }
         });
 
-        // 如果当前进程挂起，则进入启动页
-        if (savedInstanceState == null) {
-            if (!getIntent().getBooleanExtra(EXTRA_BOOLEAN_SELECT_ITEM_TO_PLAY, false)) {
-                startActivity(new Intent(this, SplashActivity.class));
-            }
-        }
+//        // 如果当前进程挂起，则进入启动页
+//        if (savedInstanceState == null) {
+//            if (!getIntent().getBooleanExtra(EXTRA_BOOLEAN_SELECT_ITEM_TO_PLAY, false)) {
+//                startActivity(new Intent(this, SplashActivity.class));
+//            }
+//        }
 
         if (!isPro()) {
             mBinding.pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
