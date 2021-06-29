@@ -10,8 +10,8 @@ import com.basenetlib.okgo.NetResponseCallBack;
  * Description:This is RegLatestPresent
  */
 public class RegLatestPresent implements RegLatestContact.IRegLatestPresent {
-    public static String URL_Reg_Center = "http://221.122.114.64:8087";//注册码中心系统
-    public static String APP_MARK = "QZGL";//软件标识
+    public static String URL_Reg_Center = "https://zc.cha365.cn";//注册码中心系统
+    public static String APP_MARK = "QZZDAB";//软件标识
 
     @Override
     public void setRegisCodeNumber(String regisCode, int size, final RequestStatus requestStatus) {
