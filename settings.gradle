@@ -1,1 +1,1 @@
-include ':EasyPlayer', ':library', ':simpleplayer', ':RegMode', ':base_net_lib'
+include ':EasyPlayer', ':library', ':simpleplayer', ':base_net_lib', ':module_Base', ':RegMode'

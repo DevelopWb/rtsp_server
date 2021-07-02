@@ -30,9 +30,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.signature.StringSignature;
-import com.regmode.RegOperateUtil;
-import com.regmode.Utils.RegLatestContact;
+import com.regmode.RegLatestContact;
+import com.regmode.Utils.RegOperateManager;
 
 import org.easydarwin.easyplayer.BuildConfig;
 import org.easydarwin.easyplayer.R;
@@ -131,7 +130,7 @@ public class PlayListActivity extends AppCompatActivity implements View.OnClickL
 
 
                 File file = FileUtil.getSnapFile(url);
-                Glide.with(PlayListActivity.this).load(file).signature(new StringSignature(UUID.randomUUID().toString())).placeholder(R.mipmap.dev_icon).centerCrop().into(plvh.mImageView);
+                Glide.with(PlayListActivity.this).load(file).placeholder(R.mipmap.dev_icon).centerCrop().into(plvh.mImageView);
 
                 int audienceNumber = mCursor.getInt(mCursor.getColumnIndex(VideoSource.AUDIENCE_NUMBER));
 
@@ -203,18 +202,19 @@ public class PlayListActivity extends AppCompatActivity implements View.OnClickL
 //
 //        update = new UpdateMgr(this);
 //        update.checkUpdate(url);
-        RegOperateUtil regOprateUtil = RegOperateUtil.getInstance(this);
-        regOprateUtil.setCancelCallBack(new RegLatestContact.CancelCallBack() {
-            @Override
-            public void toFinishActivity() {
-                finish();
-            }
+        RegOperateManager regOprateUtil = RegOperateManager.getInstance(this);
+        regOprateUtil.setCancelCallBack(
+                new RegLatestContact.CancelCallBack() {
+                    @Override
+                    public void toFinishActivity() {
+                        finish();
+                    }
 
-            @Override
-            public void toDoNext() {
+                    @Override
+                    public void toDoNext() {
 
-            }
-        });
+                    }
+                });
     }
 
     @Override
