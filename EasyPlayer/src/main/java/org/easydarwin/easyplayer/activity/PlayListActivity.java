@@ -70,7 +70,7 @@ public class PlayListActivity extends AppCompatActivity implements View.OnClickL
 
     private UpdateMgr update;
 
-    private long mExitTime;//声明一个long类型变量：用于存放上一点击“返回键”的时刻
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +124,7 @@ public class PlayListActivity extends AppCompatActivity implements View.OnClickL
                 if (url.length()>8) {
                     String  ip = url.substring(7,url.lastIndexOf(":"));
                     String  regCode = url.substring(url.lastIndexOf("/")+1,url.lastIndexOf("."));
-                    plvh.mDevUrlTv.setText(ip);
+//                    plvh.mDevUrlTv.setText(ip);
                     plvh.mDevRegTv.setText(regCode);
                 }
 
@@ -319,18 +319,7 @@ public class PlayListActivity extends AppCompatActivity implements View.OnClickL
         return true;
     }
 
-    @Override
-    public void onBackPressed() {
-        //与上次点击返回键时刻作差
-        if ((System.currentTimeMillis() - mExitTime) > 2000) {
-            //大于2000ms则认为是误操作，使用Toast进行提示
-            Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
-            //并记录下本次点击“返回键”的时刻，以便下次进行判断
-            mExitTime = System.currentTimeMillis();
-        } else {
-            super.onBackPressed();
-        }
-    }
+
 
     private void displayDialog(final int pos) {
         String url = "rtsp://";
@@ -445,7 +434,7 @@ public class PlayListActivity extends AppCompatActivity implements View.OnClickL
      */
     class PlayListViewHolder extends RecyclerView.ViewHolder {
         private final TextView mDevNameTv;
-        private final TextView mDevUrlTv;
+//        private final TextView mDevUrlTv;
         private final TextView mDevRegTv;
 //        private final TextView mAudienceNumber;
         private final ImageView mImageView;
@@ -454,7 +443,7 @@ public class PlayListActivity extends AppCompatActivity implements View.OnClickL
             super(binding.getRoot());
 
             mDevNameTv = binding.devNameValueTv;
-            mDevUrlTv = binding.devUrlValueTv;
+//            mDevUrlTv = binding.devUrlValueTv;
             mDevRegTv = binding.devRegValueTv;
 //            mAudienceNumber = binding.videoSourceItemAudienceNumber;
             mImageView = binding.videoSourceItemThumb;
