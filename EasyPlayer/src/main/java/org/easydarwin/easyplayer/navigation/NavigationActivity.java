@@ -34,7 +34,7 @@ public class NavigationActivity extends BaseActivity implements View.OnClickList
     private LinearLayout mMenuQuitLl;
     private MyMenuAdapter mMenuAdapter;
     public static final int NAME_CAMERA = 0;
-    public static final String APP_PACKAGE_NAME = "com.juntai.wisdom.inspection";
+    public static final String APP_PACKAGE_NAME = "MonitorAB.Android";
     public static final int NAME_GLASSES = 1;//眼镜
     private long mExitTime;//声明一个long类型变量：用于存放上一点击“返回键”的时刻
     @Override
@@ -60,10 +60,10 @@ public class NavigationActivity extends BaseActivity implements View.OnClickList
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (position) {
                     case 0:
-                        startActivity(new Intent(mContext, PlayListActivity.class));
+                        launchapp(mContext);
                         break;
                     case 1:
-                        launchapp(mContext);
+                        startActivity(new Intent(mContext, PlayListActivity.class));
                         break;
                     default:
                         break;

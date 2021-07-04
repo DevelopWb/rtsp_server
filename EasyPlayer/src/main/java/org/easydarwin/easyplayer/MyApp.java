@@ -12,7 +12,7 @@ import org.easydarwin.video.Client;
 
 import io.reactivex.annotations.Beta;
 
-public class TheApp extends Application {
+public class MyApp extends Application {
 
     public static SQLiteDatabase sDB;
     public static int activeDays = 9999;

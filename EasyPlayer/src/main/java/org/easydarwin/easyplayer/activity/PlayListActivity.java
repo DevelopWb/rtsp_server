@@ -35,7 +35,7 @@ import com.regmode.Utils.RegOperateManager;
 
 import org.easydarwin.easyplayer.BuildConfig;
 import org.easydarwin.easyplayer.R;
-import org.easydarwin.easyplayer.TheApp;
+import org.easydarwin.easyplayer.MyApp;
 import org.easydarwin.easyplayer.bean.VedioAddrBean;
 import org.easydarwin.easyplayer.data.VideoSource;
 import org.easydarwin.easyplayer.databinding.ActivityPlayListBinding;
@@ -44,7 +44,6 @@ import org.easydarwin.easyplayer.util.FileUtil;
 import org.easydarwin.update.UpdateMgr;
 
 import java.io.File;
-import java.util.UUID;
 
 import static org.easydarwin.update.UpdateMgr.MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE;
 
@@ -87,7 +86,7 @@ public class PlayListActivity extends AppCompatActivity implements View.OnClickL
         setSupportActionBar(mBinding.toolbar);
 
 //        // 添加默认地址
-        mCursor = TheApp.sDB.query(VideoSource.TABLE_NAME, null, null, null, null, null, null);
+        mCursor = MyApp.sDB.query(VideoSource.TABLE_NAME, null, null, null, null, null, null);
 //        if (!mCursor.moveToFirst()) {
 //            ContentValues cv = new ContentValues();
 //            cv.put(VideoSource.URL, "rtsp://218.246.35.198:554/688844");
@@ -303,9 +302,9 @@ public class PlayListActivity extends AppCompatActivity implements View.OnClickL
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     mCursor.moveToPosition(pos);
-                                    TheApp.sDB.delete(VideoSource.TABLE_NAME, VideoSource._ID + "=?", new String[]{String.valueOf(mCursor.getInt(mCursor.getColumnIndex(VideoSource._ID)))});
+                                    MyApp.sDB.delete(VideoSource.TABLE_NAME, VideoSource._ID + "=?", new String[]{String.valueOf(mCursor.getInt(mCursor.getColumnIndex(VideoSource._ID)))});
                                     mCursor.close();
-                                    mCursor = TheApp.sDB.query(VideoSource.TABLE_NAME, null, null, null, null, null, null);
+                                    mCursor = MyApp.sDB.query(VideoSource.TABLE_NAME, null, null, null, null, null, null);
                                     mRecyclerView.getAdapter().notifyItemRemoved(pos);
                                 }
                             })
@@ -385,16 +384,16 @@ public class PlayListActivity extends AppCompatActivity implements View.OnClickL
                         if (pos > -1) {
                             final int _id = mCursor.getInt(mCursor.getColumnIndex(VideoSource._ID));
 
-                            TheApp.sDB.update(VideoSource.TABLE_NAME, cv, VideoSource._ID + "=?", new String[]{String.valueOf(_id)});
+                            MyApp.sDB.update(VideoSource.TABLE_NAME, cv, VideoSource._ID + "=?", new String[]{String.valueOf(_id)});
 
                             mCursor.close();
-                            mCursor = TheApp.sDB.query(VideoSource.TABLE_NAME, null, null, null, null, null, null);
+                            mCursor = MyApp.sDB.query(VideoSource.TABLE_NAME, null, null, null, null, null, null);
                             mRecyclerView.getAdapter().notifyItemChanged(pos);
                         } else {
-                            TheApp.sDB.insert(VideoSource.TABLE_NAME, null, cv);
+                            MyApp.sDB.insert(VideoSource.TABLE_NAME, null, cv);
 
                             mCursor.close();
-                            mCursor = TheApp.sDB.query(VideoSource.TABLE_NAME, null, null, null, null, null, null);
+                            mCursor = MyApp.sDB.query(VideoSource.TABLE_NAME, null, null, null, null, null, null);
                             mRecyclerView.getAdapter().notifyItemInserted(mCursor.getCount() - 1);
                         }
                     }
@@ -479,10 +478,10 @@ public class PlayListActivity extends AppCompatActivity implements View.OnClickL
 
                 cv.put(VideoSource.SEND_OPTION, bean.isSendPakage() ? VideoSource.SEND_OPTION_TRUE : VideoSource.SEND_OPTION_FALSE);
 
-                TheApp.sDB.insert(VideoSource.TABLE_NAME, null, cv);
+                MyApp.sDB.insert(VideoSource.TABLE_NAME, null, cv);
 
                 mCursor.close();
-                mCursor = TheApp.sDB.query(VideoSource.TABLE_NAME, null, null, null, null, null, null);
+                mCursor = MyApp.sDB.query(VideoSource.TABLE_NAME, null, null, null, null, null, null);
                 mRecyclerView.getAdapter().notifyItemInserted(mCursor.getCount() - 1);
             }
         } else {
