@@ -10,8 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.target.ImageViewTarget;
 
 import org.easydarwin.easyplayer.R;
 import org.easydarwin.easyplayer.databinding.FragmentImageBinding;
@@ -78,34 +76,34 @@ public class ImageFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        Glide.with(this).load(mUri).into(new ImageViewTarget<GlideDrawable>(mBinding.galleryImageView) {
-            @Override
-            protected void setResource(GlideDrawable resource) {
-                mBinding.galleryImageView.setImageDrawable(resource);
-
-                mAttacher = new PhotoViewAttacher(mBinding.galleryImageView);
-//                mAttacher.setZoomable(false);
-                mAttacher.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
-                    @Override
-                    public void onPhotoTap(View view, float v, float v1) {
-                        getFragmentManager().popBackStack();
-                    }
-
-                    @Override
-                    public void onOutsidePhotoTap() {
-                        getFragmentManager().popBackStack();
-                    }
-                });
-
-                mAttacher.setOnViewTapListener(new PhotoViewAttacher.OnViewTapListener() {
-                    @Override
-                    public void onViewTap(View view, float v, float v1) {
-                        getFragmentManager().popBackStack();
-                    }
-                });
-            }
-        });
+        // TODO: 2021/7/2 暂时先注释掉
+//        Glide.with(this).load(mUri).into(new ImageViewTarget<GlideDrawable>(mBinding.galleryImageView) {
+//            @Override
+//            protected void setResource(GlideDrawable resource) {
+//                mBinding.galleryImageView.setImageDrawable(resource);
+//
+//                mAttacher = new PhotoViewAttacher(mBinding.galleryImageView);
+////                mAttacher.setZoomable(false);
+//                mAttacher.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
+//                    @Override
+//                    public void onPhotoTap(View view, float v, float v1) {
+//                        getFragmentManager().popBackStack();
+//                    }
+//
+//                    @Override
+//                    public void onOutsidePhotoTap() {
+//                        getFragmentManager().popBackStack();
+//                    }
+//                });
+//
+//                mAttacher.setOnViewTapListener(new PhotoViewAttacher.OnViewTapListener() {
+//                    @Override
+//                    public void onViewTap(View view, float v, float v1) {
+//                        getFragmentManager().popBackStack();
+//                    }
+//                });
+//            }
+//        });
     }
 
     @Override

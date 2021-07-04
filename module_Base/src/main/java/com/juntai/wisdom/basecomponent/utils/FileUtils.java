@@ -7,12 +7,6 @@ import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.cache.ExternalCacheDiskCacheFactory;
-import com.juntai.wisdom.basecomponent.utils.BaseAppUtils;
-import com.juntai.wisdom.basecomponent.utils.LogUtil;
-import com.juntai.wisdom.basecomponent.utils.MD5;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;

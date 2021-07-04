@@ -34,7 +34,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.signature.StringSignature;
+import com.bumptech.glide.signature.ObjectKey;
+import com.bumptech.glide.signature.ObjectKey;
 
 import org.easydarwin.easyplayer.BuildConfig;
 import org.easydarwin.easyplayer.R;
@@ -156,7 +157,7 @@ public class PlayFragment extends Fragment implements TextureView.SurfaceTexture
         if (!TextUtils.isEmpty(mUrl)) {
             Glide.with(this)
                     .load(FileUtil.getSnapFile(mUrl))
-                    .signature(new StringSignature(UUID.randomUUID().toString()))
+                    .signature(new ObjectKey(UUID.randomUUID().toString()))
                     .fitCenter()
                     .into(cover);
         }
@@ -712,7 +713,7 @@ public class PlayFragment extends Fragment implements TextureView.SurfaceTexture
         if (!TextUtils.isEmpty(mUrl)) {
             Glide.with(this)
                     .load(FileUtil.getSnapFile(mUrl))
-                    .signature(new StringSignature(UUID.randomUUID().toString()))
+                    .signature(new ObjectKey(UUID.randomUUID().toString()))
                     .fitCenter()
                     .into(cover);
         }

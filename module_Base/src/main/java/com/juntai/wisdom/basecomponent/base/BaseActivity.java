@@ -32,7 +32,6 @@ import com.gyf.barlibrary.ImmersionBar;
 import com.juntai.wisdom.basecomponent.R;
 import com.juntai.wisdom.basecomponent.utils.DisplayUtil;
 import com.juntai.wisdom.basecomponent.utils.EventManager;
-import com.juntai.wisdom.basecomponent.utils.ImageLoadUtil;
 import com.juntai.wisdom.basecomponent.utils.LoadingDialog;
 import com.juntai.wisdom.basecomponent.utils.ScreenUtils;
 import com.juntai.wisdom.basecomponent.utils.ToastUtils;
